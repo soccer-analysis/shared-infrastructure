@@ -39,5 +39,5 @@ class Driver:
 		return self.__driver.find_elements(By.XPATH, xpath)
 
 	def wait(self) -> 'Driver':
-		time.sleep(.25)
+		time.sleep(.5)
 		return self
