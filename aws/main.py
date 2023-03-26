@@ -29,11 +29,10 @@ class SoccerAnalysisStack(Stack):
 				directory=getcwd(),
 				platform=cast(Platform, Platform.LINUX_AMD64),
 				file='Dockerfile',
-				exclude=['cdk.out', 'aws'],
 				cmd=['src.scrape.scrape_season_match_ids.lambda_handler']
 			),
 			environment={
-				'S3_BUCKET': bucket.bucket_name,
+				'BUCKET': bucket.bucket_name,
 				'MATCH_ID_QUEUE_URL': match_id_queue.queue_url
 			},
 			role=Role(
