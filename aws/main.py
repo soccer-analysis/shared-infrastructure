@@ -22,7 +22,7 @@ class SoccerAnalysisStack(Stack):
 			'scrape-season-match-ids-function',
 			function_name='scrape-season-match-ids',
 			reserved_concurrent_executions=1,
-			memory_size=512,
+			memory_size=1024,
 			timeout=Duration.minutes(15),
 			log_retention=RetentionDays.FIVE_DAYS,
 			code=DockerImageCode.from_image_asset(
