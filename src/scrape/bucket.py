@@ -1,3 +1,5 @@
+from typing import Union
+
 import boto3
 import botocore
 
@@ -16,3 +18,6 @@ class Bucket:
 				return False
 			raise e
 		return True
+
+	def put(self, key: str, content: Union[str, bytes]) -> None:
+		self.__s3.put_object(Bucket=BUCKET, Key=key, Body=content)

@@ -7,13 +7,13 @@ from src.scrape.bucket import Bucket
 from src.scrape.web_driver import Driver
 
 region_tournaments: List[Tuple[int, int]] = [
-	(252, 2),  # Premier League
+	(74, 22),  # Ligue 1
+	(81, 3),  # Bundesliga
 	(108, 5),  # Serie A
 	(206, 4),  # LaLiga
-	(81, 3),  # Bundesliga
-	(74, 22),  # Ligue 1
 	(250, 12),  # Champions League
-	(250, 30)  # Europa League
+	(250, 30),  # Europa League
+	(252, 2)  # Premier League
 ]
 
 
