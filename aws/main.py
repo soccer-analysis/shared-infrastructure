@@ -17,7 +17,7 @@ class MatchScraperStack(Stack):
 		create_function(
 			self,
 			name='backfill-match-ids',
-			cmd='src.scrape.backfill_match_ids.lambda_handler',
+			cmd='src.backfill_match_ids.lambda_handler',
 			env={
 				'BUCKET': bucket.bucket_name,
 				'MATCH_ID_QUEUE_URL': match_id_queue.queue_url
@@ -39,7 +39,7 @@ class MatchScraperStack(Stack):
 		scrape_match = create_function(
 			self,
 			name='scrape-match',
-			cmd='src.scrape.scrape_match.lambda_handler',
+			cmd='src.scrape_match.lambda_handler',
 			env={
 				'BUCKET': bucket.bucket_name
 			},

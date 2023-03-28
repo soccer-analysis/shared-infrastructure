@@ -3,8 +3,8 @@ from typing import List, Tuple, Dict, Any
 from tqdm import tqdm
 
 from src.env import MATCH_ID_QUEUE_URL
-from src.scrape.bucket import Bucket
-from src.scrape.web_driver import Driver
+from src.bucket import Bucket
+from src.web_driver import Driver
 
 region_tournaments: List[Tuple[int, int]] = [
 	(74, 22),  # Ligue 1

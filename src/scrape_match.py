@@ -8,8 +8,8 @@ import json5
 
 from unidecode import unidecode
 
-from src.scrape.bucket import Bucket
-from src.scrape.web_driver import Driver
+from src.bucket import Bucket
+from src.web_driver import Driver
 
 
 def scrape_match(match_id: str) -> None:
@@ -17,7 +17,7 @@ def scrape_match(match_id: str) -> None:
 	driver = Driver()
 	bucket = Bucket()
 	key = 'raw/%s.json.gzip' % match_id
-	driver.get('https://whoscored.com/Matches/%s/Live' % match_id)
+	driver.get('https://whoscored.com/Matches/%s/Live' % match_id).wait()
 	raw = driver.page_source \
 		.split('require.config.params["args"] = ')[-1] \
 		.split('</script>')[0] \
@@ -26,6 +26,9 @@ def scrape_match(match_id: str) -> None:
 	data = json5.loads(unidecode(raw))
 	if (data['matchCentreData'] or {}).get('elapsed') != 'FT':
 		return
+	league_link = driver.find_element('//div[@id="breadcrumb-nav"]//a')
+	data['league_id'] = int(league_link.get_attribute('href').lower().split('/tournaments/')[-1].split('/')[0])
+	data['season'] = int(league_link.text.split('-')[-1].split('/')[0])
 	compressed = gzip.compress(ujson.dumps(data).encode())
 	bucket.put(key, compressed)
 
@@ -44,4 +47,4 @@ def lambda_handler(event: Dict = None, context: Any = None) -> None:
 
 
 if __name__ == '__main__':
-	lambda_handler()
+	scrape_match('1640742')
