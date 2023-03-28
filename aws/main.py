@@ -7,9 +7,9 @@ from constructs import Construct
 from aws.function import create_function, Allow
 
 
-class SoccerAnalysisStack(Stack):
+class MatchScraperStack(Stack):
 	def __init__(self, scope: Construct):
-		super().__init__(scope, 'soccer-analysis')
+		super().__init__(scope, 'soccer-analysis-match-scraper')
 		match_id_queue = Queue(self, 'match-id-queue', retention_period=Duration.days(1),
 							   visibility_timeout=Duration.minutes(15), receive_message_wait_time=Duration.seconds(20))
 		bucket = Bucket(self, 'bucket', removal_policy=RemovalPolicy.DESTROY)
@@ -61,5 +61,5 @@ class SoccerAnalysisStack(Stack):
 
 if __name__ == '__main__':
 	app = App()
-	SoccerAnalysisStack(app)
+	MatchScraperStack(app)
 	app.synth()
