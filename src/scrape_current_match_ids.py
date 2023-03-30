@@ -14,14 +14,7 @@ def lambda_handler(event: Dict = None, context: Any = None) -> None:
 	driver = Driver()
 	for region, tournament in tqdm(region_tournaments):
 		driver.get('https://www.whoscored.com/Regions/%s/Tournaments/%s' % (region, tournament)).wait()
-		while True:
-			enqueue_match_ids(driver, bucket, queue)
-			previous_day_button = driver.find_element('//a[contains(@class, "previous")]')
-			is_disabled = 'is-disabled' in previous_day_button.get_attribute('class')
-			if is_disabled:
-				break
-			previous_day_button.click()
-			driver.wait()
+		enqueue_match_ids(driver, bucket, queue)
 
 
 if __name__ == '__main__':

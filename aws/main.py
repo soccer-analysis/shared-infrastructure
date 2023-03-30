@@ -1,4 +1,6 @@
 from aws_cdk import Stack, RemovalPolicy, App, CfnOutput, Duration
+from aws_cdk.aws_events import Rule, Schedule
+from aws_cdk.aws_events_targets import LambdaFunction
 from aws_cdk.aws_lambda_event_sources import SqsEventSource
 from aws_cdk.aws_s3 import Bucket
 from aws_cdk.aws_sqs import Queue
@@ -35,6 +37,31 @@ class MatchScraperStack(Stack):
 				)
 			]
 		)
+
+		scrape_current_match_ids = LambdaFunction(create_function(
+			self,
+			name='scrape-current-match-ids',
+			cmd='src.scrape_current_match_ids.lambda_handler',
+			env={
+				'BUCKET': bucket.bucket_name,
+				'MATCH_ID_QUEUE_URL': match_id_queue.queue_url
+			},
+			memory_size=512,
+			reserved_concurrent_executions=1,
+			allows=[
+				Allow(
+					actions=['s3:GetObject', 's3:ListBucket'],
+					resources=[bucket.bucket_arn, f'{bucket.bucket_arn}/*']
+				),
+				Allow(
+					actions=['sqs:SendMessage'],
+					resources=[match_id_queue.queue_arn]
+				)
+			]
+		))
+
+		Rule(self, 'twice-daily', schedule=Schedule.cron(hour='1,18', minute='0')) \
+			.add_target(scrape_current_match_ids)
 
 		scrape_match = create_function(
 			self,
