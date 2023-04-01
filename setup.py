@@ -11,11 +11,11 @@ setuptools.setup(
 	description='Shared infrastructure for the soccer-analysis project',
 	long_description=long_description,
 	long_description_content_type="text/markdown",
-	url='https://github.com/mike-huls/toolbox',
+	url='https://github.com/soccer-analysis/shared-infrastructure',
 	project_urls={
 		"Bug Tracker": "https://github.com/soccer-analysis/shared-infrastructure/issues"
 	},
 	license='MIT',
 	packages=['shared_infrastructure'],
-	install_requires=['requests'],
+	install_requires=['aws-cdk-lib'],
 )
