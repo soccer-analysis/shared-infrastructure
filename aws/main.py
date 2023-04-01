@@ -5,7 +5,7 @@ from constructs import Construct
 
 class SharedInfrastructureStack(Stack):
 	def __init__(self, scope: Construct):
-		super().__init__(scope, 'soccer-analysis-shared_infrastructure')
+		super().__init__(scope, 'soccer-analysis-shared-infrastructure')
 		bucket = Bucket(self, 'bucket', removal_policy=RemovalPolicy.DESTROY)
 		CfnOutput(self, 'bucket-output', export_name='bucket', value=bucket.bucket_name)
 		CfnOutput(self, 'bucket-arn-output', export_name='bucket-arn', value=bucket.bucket_arn)
