@@ -3,8 +3,12 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 name = "pypi"
 
-[dev-packages]
+[packages]
 aws-cdk-lib = "*"
+boto3 = "*"
+
+[dev-packages]
+dparse = "*"
 
 [requires]
 python_version = "3.9"
