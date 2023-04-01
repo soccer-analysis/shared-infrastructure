@@ -1,6 +1,6 @@
 name: Deploy
 concurrency:
-  group: match-scraper
+  group: shared_infrastructure
   cancel-in-progress: true
 on:
   workflow_dispatch:
