@@ -1,11 +1,14 @@
 import setuptools
-from dparse import parse, filetypes
 
 with open('README.md', 'r', encoding='utf-8') as fh:
 	long_description = fh.read()
 
 with open('Pipfile', 'r') as pf:
-	pipfile = parse(pf, file_type=filetypes.pipfile)
+	install_requires = [
+		x.split('=')[0].strip()
+		for x in pf.read().split('[packages]')[-1].split('[')[0].strip().splitlines()
+	]
+
 
 setuptools.setup(
 	name='shared-infrastructure',
@@ -21,5 +24,5 @@ setuptools.setup(
 	},
 	license='MIT',
 	packages=['shared_infrastructure'],
-	install_requires=[x.name for x in pipfile.dependencies if x.section == 'packages'],
+	install_requires=install_requires,
 )

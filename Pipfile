@@ -8,7 +8,6 @@ aws-cdk-lib = "*"
 boto3 = "*"
 
 [dev-packages]
-dparse = "*"
 
 [requires]
 python_version = "3.9"
